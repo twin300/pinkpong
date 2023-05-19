@@ -15,6 +15,10 @@ class GameSprite(sprite.Sprite):
 
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
+    # добавляем стандартное движение
+    def update(self):
+        self.rect.x += self.speed
+        self.rect.y += self.speed
 
 # Игровая сцена:
 back = (200, 255, 255) # цвет фона (background)
@@ -29,10 +33,17 @@ finish = False
 clock = time.Clock()
 FPS = 60
 
+ball = GameSprite('tenis_ball.png', 200, 200, 4, 50, 50)
+
 while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+
+    if not finish:
+        window.fill(back)
+        ball.update()
+        ball.reset()
 
     display.update()
     clock.tick(FPS)
